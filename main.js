@@ -21,6 +21,10 @@
 
 Проверить, чтобы все работало без ошибок в консоли */
 
+//2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
+//отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
+//возвращаем пользователя к вопросам опять
+
 'use strict';
 
 const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '') ;
@@ -34,14 +38,33 @@ const personalMovieDB = {
     privat: false
 };
 
-const a = prompt('Один из последних просмотренных фильмов?', ''),
-      b = prompt('На сколько оцените его?',''),
-      c = prompt('Один из последних просмотренных фильмов?', ''),
-      d = prompt('На сколько оцените его?','');
+for (let i=0; i < 2; i++) {
+    const a = prompt('Один из последних просмотренных фильмов?', '');
+    const b = prompt('На сколько оцените его?','');
+
+    if (a != null && b != null && a != '' && b != '' && a.length < 50 ) {
+        personalMovieDB[a] = b;
+        console.log('Done')
+    }  else {
+        console.log('Error');
+        i--;
+    }
+}
+
+if (personalMovieDB.count < 10)  {
+    console.log('Просмотрено довольно мало фильмов');
+} else if (personalMovieDB.count > 10 && personalMovieDB.count < 30 ) {
+    console.log ('Вы классический зритель');
+} else if (personalMovieDB.count > 30) {
+    console.log('Вы киноман');
+} else {
+    console.log('Произошла ошибка')
+}
 
 
-personalMovieDB.movies[a] = b;
-personalMovieDB.movies[c] = d;
+
+
+
 
 console.log(personalMovieDB);
 
